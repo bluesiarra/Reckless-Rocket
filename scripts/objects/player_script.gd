@@ -8,9 +8,11 @@ var x_topSpeed = 320
 var x_accel = 8
 var tilt = 0
 
-var motion = Vector2.ZERO
+var start_pos
+
+export var motion = Vector2.ZERO
 func _ready():
-	pass 
+	start_pos = position
 
 func _input(event):
 	if event is InputEventScreenTouch and event.is_pressed():
@@ -20,6 +22,8 @@ func _input(event):
 			Input.action_press("right")
 
 func _process(delta):
+	position.y = start_pos.y
+	
 	if Input.is_action_pressed("left"):
 		motion.x += -x_accel
 	elif Input.is_action_pressed("right"):

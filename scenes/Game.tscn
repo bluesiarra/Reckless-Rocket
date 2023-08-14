@@ -5,9 +5,3 @@
 [node name="Game" type="Node2D"]
 
 [node name="World" parent="." instance=ExtResource( 1 )]
-
-[node name="ColorRect" type="ColorRect" parent="."]
-margin_left = 163.0
-margin_top = 161.0
-margin_right = 203.0
-margin_bottom = 255.0
