@@ -16,8 +16,8 @@ func _ready():
 func _process(delta):
 	counter += delta
 	
-	if counter >= 2:
+	if counter >= 1.5:
 		counter = 0
 		var new_asteroid = load("res://objects/Asteroid.tscn").instance()
-		var loaded_asteroid = add_child(new_asteroid)
-		print(loaded_asteroid)
+		add_child(new_asteroid)
+

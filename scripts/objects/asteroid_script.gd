@@ -14,17 +14,25 @@ var power_up = 0
 
 var motion = Vector2.ZERO
 
-var angle_speed = 2
-var speed = 600
+var angle_speed 
+var speed
 
-onready var start_pos = position
+var start_pos
 
+onready var player = get_node("../Player")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
 	rng.randomize()
 	
-	position.x = get_node("../Player").position.x + rng.randi_range(-screen_size.x/2, screen_size.x/2)
+	position.x = player.position.x + rng.randi_range(-screen_size.x/2, screen_size.x/2)
+	position.y = -0.5 * screen_size.y
+	
+	speed = player.y_Speed
+	
+	start_pos = position
+	
+	angle_speed = rng.randf_range(0.5, 1.5)
 
 	type = rng.randi_range(0, 2) #0 is weak, 1 is strong 2 is powerup
 	
@@ -37,7 +45,6 @@ func _ready():
 	if type == 1:
 		speed = speed * 0.8
 
-	type = 1
 
 
 
@@ -61,9 +68,10 @@ func _process(delta):
 				queue_free()
 			if type == 1:
 				if body.position.x <= self.position.x:
-					body.motion.x = -abs(body.motion.x)
+					body.motion.x = -abs(body.motion.x) * 4
 				else:
-					body.motion.x = abs(body.motion.x)
+					body.motion.x = abs(body.motion.x) * 4
+				body.can_move = false
 	
 	if position.y > screen_size.y * 1.5:
 		queue_free()
