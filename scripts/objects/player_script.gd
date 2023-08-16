@@ -29,13 +29,15 @@ func _input(event):
 func _process(delta):
 	position.y = start_pos.y
 	
+	get_node("/root/Game/HUD/DebugLabel").text = String(y_Speed)
+	
 	if !can_move:
 		cant_move_timer += delta
 		if cant_move_timer > 1.5:
 			can_move = true
 			cant_move_timer = 0
 	else:
-		y_Speed += delta
+		y_Speed += delta * 6
 	
 	if Input.is_action_pressed("left") and can_move:
 		motion.x += -x_accel
