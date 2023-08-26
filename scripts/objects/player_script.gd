@@ -5,31 +5,58 @@ extends KinematicBody2D
 onready var screen_size = get_viewport().get_visible_rect().size
 
 var x_topSpeed = 320
-var x_accel = 8
+export var x_accel = 8
 var tilt = 0
 
 export var y_Speed = 600
-
 export var can_move = true
+export var powerups = [false, false, false]
+export var powerups_timer = [false, false, false]
+
 var cant_move_timer = 0
 
 var start_pos
 
 export var motion = Vector2.ZERO
+
+var touch_position = null
+var is_touch_held = false
+
+onready var nitro_timer = $NitroTimer
 func _ready():
+	nitro_timer.connect("timeout", self, "on_NitroOut")
+	
 	start_pos = position
 
 func _input(event):
-	if event is InputEventScreenTouch and event.is_pressed():
-		if event.position.x < (0.5 * screen_size.x):
-			Input.action_press("left")
-		if event.position.x > (0.5 * screen_size.x):
-			Input.action_press("right")
-
+	if event is InputEventScreenTouch:
+		if (event.pressed == true):
+			is_touch_held = true
+			
+			touch_position = event.position
+		else:
+			is_touch_held = false
+			touch_position = null
+	elif event is InputEventScreenDrag:
+		touch_position = event.position
+		
+	
 func _process(delta):
 	position.y = start_pos.y
 	
 	get_node("/root/Game/HUD/DebugLabel").text = String(y_Speed)
+	
+	
+	if (is_touch_held == true and touch_position != null):
+		if touch_position.x < screen_size.x/2:
+
+			Input.action_press("left")
+		else:
+			Input.action_press("right")
+	else:
+		Input.action_release("left")
+		Input.action_release("right")
+
 	
 	if !can_move:
 		cant_move_timer += delta
@@ -37,7 +64,10 @@ func _process(delta):
 			can_move = true
 			cant_move_timer = 0
 	else:
-		y_Speed += delta * 6
+		if !powerups[0]:
+			y_Speed += delta * 4
+		else:
+			y_Speed += delta * 12
 	
 	if Input.is_action_pressed("left") and can_move:
 		motion.x += -x_accel
@@ -50,6 +80,12 @@ func _process(delta):
 			motion.x = 0
 	else:
 		pass
+	if can_move:
+		motion.x = clamp(motion.x, -x_topSpeed, x_topSpeed)
+		
+	if powerups_timer[0]:
+		nitro_timer.start()
+		powerups_timer[0] = false
 		
 	tilt = motion.x / 16
 	motion.x = clamp(motion.x, -x_topSpeed, x_topSpeed)
@@ -57,3 +93,7 @@ func _process(delta):
 	motion = move_and_slide(motion)
 	
 	self.rotation_degrees = 0 + tilt
+
+func on_NitroOut():
+	powerups[0] = false
+	print("timeout")

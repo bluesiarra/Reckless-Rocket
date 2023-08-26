@@ -7,6 +7,7 @@ extends Node2D
 
 var counter = 0
 
+onready var player = get_node("Player")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -16,7 +17,7 @@ func _ready():
 func _process(delta):
 	counter += delta
 	
-	if counter >= 1.5:
+	if counter * player.y_Speed > 600:
 		counter = 0
 		var new_asteroid = load("res://objects/Asteroid.tscn").instance()
 		add_child(new_asteroid)
