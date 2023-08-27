@@ -21,6 +21,10 @@ Prepare to be captivated by the serene beauty of space, the excitement of a high
 run/main_scene="res://scenes/Game.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+GameInfo="*res://scripts/automatic/game_info.gd"
+
 [display]
 
 window/size/width=810

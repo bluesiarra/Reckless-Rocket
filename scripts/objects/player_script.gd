@@ -2,13 +2,13 @@ extends KinematicBody2D
 
 
 
-onready var screen_size = get_viewport().get_visible_rect().size
+
 
 var x_topSpeed = 320
 export var x_accel = 8
 var tilt = 0
 
-export var y_Speed = 600
+export var y_Speed = 200
 export var can_move = true
 export var powerups = [false, false, false]
 export var powerups_timer = [false, false, false]
@@ -23,6 +23,9 @@ var touch_position = null
 var is_touch_held = false
 
 onready var nitro_timer = $NitroTimer
+
+onready var normal_flames = $particles/normal_flame_particals
+onready var nitro_flames = $particles/nitro_particles
 func _ready():
 	nitro_timer.connect("timeout", self, "on_NitroOut")
 	
@@ -48,7 +51,7 @@ func _process(delta):
 	
 	
 	if (is_touch_held == true and touch_position != null):
-		if touch_position.x < screen_size.x/2:
+		if touch_position.x < GameInfo.screen_size.x/2:
 
 			Input.action_press("left")
 		else:
@@ -59,6 +62,9 @@ func _process(delta):
 
 	
 	if !can_move:
+		normal_flames.emitting = false
+		nitro_flames.emitting = false
+		
 		cant_move_timer += delta
 		if cant_move_timer > 1.5:
 			can_move = true
@@ -66,8 +72,13 @@ func _process(delta):
 	else:
 		if !powerups[0]:
 			y_Speed += delta * 4
+			normal_flames.emitting = true
+			nitro_flames.emitting = false
 		else:
-			y_Speed += delta * 12
+
+			nitro_flames.emitting = true
+			normal_flames.emitting = false
+			y_Speed += delta * 20
 	
 	if Input.is_action_pressed("left") and can_move:
 		motion.x += -x_accel
@@ -82,10 +93,15 @@ func _process(delta):
 		pass
 	if can_move:
 		motion.x = clamp(motion.x, -x_topSpeed, x_topSpeed)
-		
+	
 	if powerups_timer[0]:
 		nitro_timer.start()
+
+		
+		powerups[0] = true
 		powerups_timer[0] = false
+
+
 		
 	tilt = motion.x / 16
 	motion.x = clamp(motion.x, -x_topSpeed, x_topSpeed)
@@ -93,7 +109,12 @@ func _process(delta):
 	motion = move_and_slide(motion)
 	
 	self.rotation_degrees = 0 + tilt
+	
+	
 
 func on_NitroOut():
 	powerups[0] = false
-	print("timeout")
+	powerups_timer[0] = false
+
+
+

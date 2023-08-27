@@ -10,14 +10,15 @@ var counter = 0
 onready var player = get_node("Player")
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	var new_asteroid = load("res://objects/Asteroid.tscn").instance()
+	add_child(new_asteroid)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	counter += delta
 	
-	if counter * player.y_Speed > 600:
+	if counter * player.y_Speed > 400:
 		counter = 0
 		var new_asteroid = load("res://objects/Asteroid.tscn").instance()
 		add_child(new_asteroid)

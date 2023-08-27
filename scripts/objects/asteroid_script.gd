@@ -5,7 +5,7 @@ extends KinematicBody2D
 # var a = 2
 # var b = "text"
 
-onready var screen_size = get_viewport().get_visible_rect().size
+
 
 var rng = RandomNumberGenerator.new()
 
@@ -31,8 +31,8 @@ func _ready():
 	
 	rng.randomize()
 	
-	position.x = player.position.x + rng.randi_range(-2 * screen_size.x, 2 * screen_size.x)
-	position.y = -0.5 * screen_size.y
+	position.x = player.position.x + rng.randi_range(-GameInfo.screen_size.x, GameInfo.screen_size.x)
+	position.y = -0.5 * GameInfo.screen_size.y
 	
 	speed = player.y_Speed
 	angle_speed = rng.randf_range(0.5, 1.5)
@@ -94,11 +94,11 @@ func _process(delta):
 				body.can_move = false
 			if type == 1:
 				body.y_Speed += -5
-				body.powerups[power_up - 1] = true
 				body.powerups_timer[power_up - 1] = true
+			
 			queue_free()
 	
-	if position.y > screen_size.y * 1.5:
+	if position.y > GameInfo.screen_size.y * 1.5:
 		queue_free()
 	
 			
