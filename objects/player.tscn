@@ -61,4 +61,3 @@ shape = SubResource( 1 )
 current = true
 
 [node name="NitroTimer" type="Timer" parent="."]
-wait_time = 5.0

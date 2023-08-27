@@ -18,7 +18,7 @@ func _ready():
 func _process(delta):
 	counter += delta
 	
-	if counter * player.y_Speed > 400:
+	if counter * player.y_Speed > 300:
 		counter = 0
 		var new_asteroid = load("res://objects/Asteroid.tscn").instance()
 		add_child(new_asteroid)

@@ -28,7 +28,6 @@ var strong_asteroids = ["res://art/objects/asteroids/strong/size256.png"]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
 	rng.randomize()
 	
 	position.x = player.position.x + rng.randi_range(-GameInfo.screen_size.x, GameInfo.screen_size.x)
@@ -48,7 +47,8 @@ func _ready():
 	type = rng.randi_range(0, 2) #0 is weak, 1 is strong 2 is powerup
 	
 
-
+	type = 1
+	
 	
 	if type == 1:
 		power_up = 1
@@ -61,10 +61,10 @@ func _ready():
 	if type == 2:
 		speed = speed * 0.8
 		sprite.texture = load(strong_asteroids[rng.randi_range(0, len(strong_asteroids) - 1)])
+	
 
 
-
-func _process(delta):
+func _physics_process(delta):
 	speed = player.y_Speed
 	position.x = start_pos.x
 	motion.y = speed
@@ -93,9 +93,12 @@ func _process(delta):
 				body.y_Speed -= 60
 				body.can_move = false
 			if type == 1:
-				body.y_Speed += -5
-				body.powerups_timer[power_up - 1] = true
-			
+				print(body.powerups)
+				print("-")
+				player.y_Speed += -5
+				player.powerups_timer[power_up - 1] = true
+				print(body.powerups)
+				print("-")
 			queue_free()
 	
 	if position.y > GameInfo.screen_size.y * 1.5:

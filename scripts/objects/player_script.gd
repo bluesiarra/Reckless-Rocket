@@ -11,8 +11,10 @@ var tilt = 0
 export var y_Speed = 200
 export var can_move = true
 export var powerups = [false, false, false]
-export var powerups_timer = [false, false, false]
+export var powerups_timer = [true, false, false]
 
+export var abc = 1
+export var abc_def = 2
 var cant_move_timer = 0
 
 var start_pos
@@ -26,9 +28,12 @@ onready var nitro_timer = $NitroTimer
 
 onready var normal_flames = $particles/normal_flame_particals
 onready var nitro_flames = $particles/nitro_particles
+
+
 func _ready():
 	nitro_timer.connect("timeout", self, "on_NitroOut")
-	
+		
+	powerups_timer[0] = false
 	start_pos = position
 
 func _input(event):
@@ -44,10 +49,10 @@ func _input(event):
 		touch_position = event.position
 		
 	
-func _process(delta):
+func _physics_process(delta):
 	position.y = start_pos.y
 	
-	get_node("/root/Game/HUD/DebugLabel").text = String(y_Speed)
+	get_node("/root/Game/HUD/DebugLabel").text = ("FPS " + String(Engine.get_frames_per_second()))
 	
 	
 	if (is_touch_held == true and touch_position != null):
@@ -71,11 +76,11 @@ func _process(delta):
 			cant_move_timer = 0
 	else:
 		if !powerups[0]:
+
 			y_Speed += delta * 4
 			normal_flames.emitting = true
 			nitro_flames.emitting = false
 		else:
-
 			nitro_flames.emitting = true
 			normal_flames.emitting = false
 			y_Speed += delta * 20
@@ -93,15 +98,13 @@ func _process(delta):
 		pass
 	if can_move:
 		motion.x = clamp(motion.x, -x_topSpeed, x_topSpeed)
-	
+
 	if powerups_timer[0]:
 		nitro_timer.start()
 
-		
+			
 		powerups[0] = true
 		powerups_timer[0] = false
-
-
 		
 	tilt = motion.x / 16
 	motion.x = clamp(motion.x, -x_topSpeed, x_topSpeed)
