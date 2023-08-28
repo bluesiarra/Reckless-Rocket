@@ -11,10 +11,9 @@ var tilt = 0
 export var y_Speed = 200
 export var can_move = true
 export var powerups = [false, false, false]
-export var powerups_timer = [true, false, false]
 
-export var abc = 1
-export var abc_def = 2
+
+
 var cant_move_timer = 0
 
 var start_pos
@@ -25,15 +24,15 @@ var touch_position = null
 var is_touch_held = false
 
 onready var nitro_timer = $NitroTimer
-
-onready var normal_flames = $particles/normal_flame_particals
+onready var xray_timer = $XrayTimer
+onready var normal_flames = $particles/normal_flame_particles
 onready var nitro_flames = $particles/nitro_particles
-
+onready var smoke_burst = $particles/smoke_particles
 
 func _ready():
 	nitro_timer.connect("timeout", self, "on_NitroOut")
-		
-	powerups_timer[0] = false
+	xray_timer.connect("timeout", self, "on_XRayOut")
+	
 	start_pos = position
 
 func _input(event):
@@ -52,7 +51,7 @@ func _input(event):
 func _physics_process(delta):
 	position.y = start_pos.y
 	
-	get_node("/root/Game/HUD/DebugLabel").text = ("FPS " + String(Engine.get_frames_per_second()))
+	get_node("/root/Game/HUD/DebugLabel").text = String(y_Speed)
 	
 	
 	if (is_touch_held == true and touch_position != null):
@@ -70,20 +69,26 @@ func _physics_process(delta):
 		normal_flames.emitting = false
 		nitro_flames.emitting = false
 		
+		smoke_burst.emitting = true
+		
 		cant_move_timer += delta
 		if cant_move_timer > 1.5:
 			can_move = true
 			cant_move_timer = 0
 	else:
+		smoke_burst.emitting = false		
 		if !powerups[0]:
 
 			y_Speed += delta * 4
 			normal_flames.emitting = true
 			nitro_flames.emitting = false
 		else:
+
 			nitro_flames.emitting = true
 			normal_flames.emitting = false
 			y_Speed += delta * 20
+	
+	
 	
 	if Input.is_action_pressed("left") and can_move:
 		motion.x += -x_accel
@@ -99,14 +104,16 @@ func _physics_process(delta):
 	if can_move:
 		motion.x = clamp(motion.x, -x_topSpeed, x_topSpeed)
 
-	if powerups_timer[0]:
+	if Input.is_action_pressed("powerup_0"):
 		nitro_timer.start()
-
-			
 		powerups[0] = true
-		powerups_timer[0] = false
-		
-	tilt = motion.x / 16
+		Input.action_release("powerup_0")
+	
+	if Input.is_action_pressed("powerup_1"):
+		xray_timer.start()
+		powerups[1] = true
+		Input.action_release("powerup_1")
+	tilt = motion.x / 12
 	motion.x = clamp(motion.x, -x_topSpeed, x_topSpeed)
 	
 	motion = move_and_slide(motion)
@@ -117,7 +124,8 @@ func _physics_process(delta):
 
 func on_NitroOut():
 	powerups[0] = false
-	powerups_timer[0] = false
 
+func on_XRayOut():
+	powerups[1] = false
 
 
