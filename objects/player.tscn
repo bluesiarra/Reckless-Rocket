@@ -56,6 +56,7 @@ scale_amount_random = 0.75
 color_ramp = SubResource( 3 )
 
 [node name="smoke_particles" type="CPUParticles2D" parent="particles"]
+emitting = false
 amount = 2
 lifetime = 0.8
 explosiveness = 0.4
