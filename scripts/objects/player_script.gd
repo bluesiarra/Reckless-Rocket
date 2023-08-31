@@ -30,6 +30,7 @@ onready var nitro_flames = $particles/nitro_particles
 onready var smoke_burst = $particles/smoke_particles
 
 func _ready():
+	print("player ready")
 	nitro_timer.connect("timeout", self, "on_NitroOut")
 	xray_timer.connect("timeout", self, "on_XRayOut")
 	

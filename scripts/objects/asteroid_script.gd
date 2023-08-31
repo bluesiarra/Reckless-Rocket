@@ -28,10 +28,11 @@ var strong_asteroids = ["res://art/objects/asteroids/strong/size256.png"]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print("new asteroid")
 	rng.randomize()
 	
 	position.x = player.position.x + rng.randi_range(-GameInfo.screen_size.x, GameInfo.screen_size.x)
-	position.y = -0.5 * GameInfo.screen_size.y
+	position.y = -0.2 * GameInfo.screen_size.y
 	
 	speed = player.y_Speed
 	angle_speed = rng.randf_range(0.5, 2.5)
