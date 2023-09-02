@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/objects/player_script.gd" type="Script" id=1]
-[ext_resource path="res://art/objects/rockets/0_default rocket/frame0.png" type="Texture" id=2]
+[ext_resource path="res://art/objects/full spritesheets/rockets_spritesheet.png" type="Texture" id=2]
 
 [sub_resource type="Gradient" id=2]
 offsets = PoolRealArray( 0.0160643, 0.570281, 0.7751, 1 )
@@ -16,13 +16,13 @@ offsets = PoolRealArray( 0, 0.738956, 1 )
 colors = PoolColorArray( 0.16841, 0.16841, 0.16841, 1, 0.281691, 0.281691, 0.281691, 1, 0.363722, 0.363722, 0.363722, 1 )
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 65, 129.5 )
+extents = Vector2( 105.5, 189 )
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
 
 [node name="particles" type="Node2D" parent="."]
-position = Vector2( 0, 115 )
+position = Vector2( 0, 170 )
 
 [node name="normal_flame_particles" type="CPUParticles2D" parent="particles"]
 emitting = false
@@ -74,8 +74,11 @@ color_ramp = SubResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
+hframes = 10
+vframes = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -8 )
 shape = SubResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]

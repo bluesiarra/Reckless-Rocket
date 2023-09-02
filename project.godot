@@ -24,6 +24,7 @@ config/icon="res://icon.png"
 [autoload]
 
 GameInfo="*res://scripts/automatic/game_info.gd"
+PlayerSkinManager="*res://scripts/automatic/player_skin_manager.gd"
 
 [display]
 

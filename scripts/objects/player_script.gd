@@ -8,7 +8,7 @@ var x_topSpeed = 320
 export var x_accel = 8
 var tilt = 0
 
-export var y_Speed = 200
+export var y_Speed = 350
 export var can_move = true
 export var powerups = [false, false, false]
 
@@ -23,6 +23,9 @@ export var motion = Vector2.ZERO
 var touch_position = null
 var is_touch_held = false
 
+onready var collision_shape = $CollisionShape2D
+onready var sprite = $Sprite
+
 onready var nitro_timer = $NitroTimer
 onready var xray_timer = $XrayTimer
 onready var normal_flames = $particles/normal_flame_particles
@@ -30,11 +33,14 @@ onready var nitro_flames = $particles/nitro_particles
 onready var smoke_burst = $particles/smoke_particles
 
 func _ready():
-	print("player ready")
 	nitro_timer.connect("timeout", self, "on_NitroOut")
 	xray_timer.connect("timeout", self, "on_XRayOut")
 	
 	start_pos = position
+	
+	sprite.frame = PlayerSkinManager.frame
+	collision_shape.position = PlayerSkinManager.collide_location
+	collision_shape.shape.extents = PlayerSkinManager.collide_size
 
 func _input(event):
 	if event is InputEventScreenTouch:
@@ -80,14 +86,14 @@ func _physics_process(delta):
 		smoke_burst.emitting = false		
 		if !powerups[0]:
 
-			y_Speed += delta * 4
+			y_Speed += delta * 8
 			normal_flames.emitting = true
 			nitro_flames.emitting = false
 		else:
 
 			nitro_flames.emitting = true
 			normal_flames.emitting = false
-			y_Speed += delta * 20
+			y_Speed += delta * 32
 	
 	
 	
