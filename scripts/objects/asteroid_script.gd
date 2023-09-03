@@ -22,9 +22,6 @@ var start_pos
 onready var player = get_node("../Player")
 onready var sprite = $Sprite
 
-var powerup_asteroids = ["res://art/objects/asteroids/powerup/size256.png"]
-var weak_asteroids = ["res://art/objects/asteroids/weak/size256.png"]
-var strong_asteroids = ["res://art/objects/asteroids/strong/size256.png"]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -40,20 +37,18 @@ func _ready():
 	
 	
 	
-	if rng.randi_range(0, 100) > 30:
+	if rng.randi_range(0, 100) > 40:
 		type = 2
 	else:
 		type = rng.randi_range(0, 1)
-	type = rng.randi_range(0, 2) #0 is weak, 1 is strong 2 is powerup
-	
 	
 	if type == 1:
 		power_up = 0
 		#power_up = rng.randi_range(1, 3) #1 is nitro, 2 is xray, 3 is force
-		sprite.texture = load(powerup_asteroids[rng.randi_range(0, len(powerup_asteroids) - 1)])
 
 	if type == 2:
-		sprite.texture = load(strong_asteroids[rng.randi_range(0, len(strong_asteroids) - 1)])
+		sprite.frame = 1
+
 	
 
 

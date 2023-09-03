@@ -5,6 +5,7 @@
 [node name="Game" type="Node2D"]
 
 [node name="World" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, -2 )
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
