@@ -8,7 +8,7 @@ var x_topSpeed = 320
 export var x_accel = 8
 var tilt = 0
 
-export var y_Speed = 350
+
 export var can_move = true
 export var powerups = [false, false, false]
 
@@ -33,6 +33,8 @@ onready var nitro_flames = $particles/nitro_particles
 onready var smoke_burst = $particles/smoke_particles
 
 func _ready():
+	motion.y = -600
+	
 	nitro_timer.connect("timeout", self, "on_NitroOut")
 	xray_timer.connect("timeout", self, "on_XRayOut")
 	
@@ -56,9 +58,8 @@ func _input(event):
 		
 	
 func _physics_process(delta):
-	position.y = start_pos.y
 	
-	get_node("/root/Game/HUD/DebugLabel").text = String(y_Speed)
+	get_node("/root/Game/HUD/DebugLabel").text = String(motion.y)
 	
 	
 	if (is_touch_held == true and touch_position != null):
@@ -86,14 +87,14 @@ func _physics_process(delta):
 		smoke_burst.emitting = false		
 		if !powerups[0]:
 
-			y_Speed += delta * 8
+			motion.y -= delta * 8
 			normal_flames.emitting = true
 			nitro_flames.emitting = false
 		else:
 
 			nitro_flames.emitting = true
 			normal_flames.emitting = false
-			y_Speed += delta * 32
+			motion.y -= delta * 32
 	
 	
 	
@@ -120,10 +121,33 @@ func _physics_process(delta):
 		xray_timer.start()
 		powerups[1] = true
 		Input.action_release("powerup_1")
+		
+	
 	tilt = motion.x / 12
 	motion.x = clamp(motion.x, -x_topSpeed, x_topSpeed)
+	motion.y = clamp(motion.y, -999999, 0)
 	
-	motion = move_and_slide(motion)
+	motion = move_and_slide(motion, Vector2(0, -1))
+	
+	for index in get_slide_count():
+		
+		var collision = get_slide_collision(index)
+		var body = collision.collider
+		if body.existing:
+
+			if body.type == 2 and can_move:
+				if body.position.x <= self.position.x:
+					motion.x += x_accel * 30
+				else:
+					motion.x = x_accel * 30
+				
+				motion.y += 10
+				can_move = false
+				print("smoosh")
+			if body.type == 1:
+				Input.action_press("powerup_" + String(body.power_up))
+			
+			body.queue_free()
 	
 	self.rotation_degrees = 0 + tilt
 	
