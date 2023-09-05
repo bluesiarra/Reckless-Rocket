@@ -11,13 +11,16 @@ var skin_name
 var collide_size
 var collide_location
 
+var nitro_flame
+var normal_flame
+var flame_out
+
 var skins = [
 	{
 		"frame": 0,
 		"name": "Default Rocket",
 		"collision_size": Vector2(105.5, 189),
 		"collision_location": Vector2(0, -8)
-		
 	}
 ]
 
