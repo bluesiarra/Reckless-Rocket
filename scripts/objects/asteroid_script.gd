@@ -19,6 +19,7 @@ var speed
 
 var size
 
+var start_x = 0
 
 onready var player = get_node("../Player")
 onready var sprite = $Sprite
@@ -28,7 +29,9 @@ onready var collide = $CollisionShape2D
 func _ready():
 	rng.randomize()
 	
+	
 	position.x = player.position.x + rng.randi_range(-GameInfo.screen_size.x, GameInfo.screen_size.x)
+	start_x = position.x
 	position.y = -0.5 * GameInfo.screen_size.y
 	
 	speed = player.y_Speed
@@ -55,15 +58,15 @@ func _ready():
 			power_up = 0
 		else:
 			type = 0
-
+	
+	sprite.show()
 
 	
 
 
-func _physics_process(delta):
-	
-	speed = player.y_Speed
+func _physics_process(delta):	
 	motion.y = speed
+	position.x = start_x
 	
 	self.rotation_degrees += angle_speed
 	if self.rotation_degrees >= 360:
