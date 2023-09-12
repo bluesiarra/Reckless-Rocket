@@ -19,7 +19,8 @@ Along the way, you can collect blazing hot power-ups! These glowing orbs allow y
 
 Prepare to be captivated by the serene beauty of space, the excitement of a high-stakes chase, and the triumph of mastering the reckless art of rocketry. Are you ready to leave your mark among the stars and claim your place as a Reckless Rocket legend?"
 run/main_scene="res://scenes/Game.tscn"
-boot_splash/image="res://art/brand/splashscreen.png"
+boot_splash/image="res://art/brand/icon.png"
+boot_splash/fullsize=false
 boot_splash/use_filter=false
 config/icon="res://art/brand/icon.png"
 

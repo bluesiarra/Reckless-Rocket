@@ -8,7 +8,7 @@ var x_topSpeed = 400
 export var x_accel = 8
 var tilt = 0
 
-export var y_Speed = 350
+export var y_Speed = 300
 export var can_move = true
 export var powerups = [false, false, false]
 
@@ -24,16 +24,21 @@ var touch_position = null
 var is_touch_held = false
 
 onready var collision_shape = $CollisionShape2D
-onready var sprite = $Sprite
+onready var sprite = $CollisionShape2D/Sprite
 onready var camera = $Camera2D
+onready var stars = $stars
+onready var nitro_bg = $nitrolines
+
+var star_scale = 1
 
 onready var nitro_timer = $NitroTimer
 onready var xray_timer = $XrayTimer
-onready var normal_flames = get_node("particles/" + String(PlayerSkinManager.frame) + "_flame")
-onready var nitro_flames = get_node("particles/" + String(PlayerSkinManager.frame) + "_nitro")
-onready var smoke_burst = get_node("particles/" + String(PlayerSkinManager.frame) + "_smoke")
+onready var normal_flames = get_node("CollisionShape2D/particles/" + String(PlayerSkinManager.frame) + "_flame")
+onready var nitro_flames = get_node("CollisionShape2D/particles/" + String(PlayerSkinManager.frame) + "_nitro")
+onready var smoke_burst = get_node("CollisionShape2D/particles/" + String(PlayerSkinManager.frame) + "_smoke")
 
 func _ready():
+	stars.emitting = true
 	rng.randomize()
 	nitro_timer.connect("timeout", self, "on_NitroOut")
 	xray_timer.connect("timeout", self, "on_XRayOut")
@@ -58,6 +63,7 @@ func _input(event):
 		
 	
 func _physics_process(delta):
+	star_scale = y_Speed / 300
 	position.y = start_pos.y
 	
 	get_node("/root/Game/HUD/DebugLabel").text = String(y_Speed)
@@ -79,6 +85,7 @@ func _physics_process(delta):
 		nitro_flames.emitting = false
 		
 		smoke_burst.emitting = true
+		nitro_bg.emitting = false
 		
 		cant_move_timer += delta
 		
@@ -92,14 +99,16 @@ func _physics_process(delta):
 	else:
 		smoke_burst.emitting = false		
 		if !powerups[0]:
-
+			stars.speed_scale = star_scale
 			y_Speed += delta * 8
 			normal_flames.emitting = true
 			nitro_flames.emitting = false
+			nitro_bg.emitting = false
 		else:
-
+			stars.speed_scale = star_scale * 4
 			nitro_flames.emitting = true
 			normal_flames.emitting = false
+			nitro_bg.emitting = true
 			y_Speed += delta * 32
 	
 	
@@ -132,8 +141,7 @@ func _physics_process(delta):
 	
 	motion = move_and_slide(motion)
 	
-	self.rotation_degrees = 0 + tilt
-	
+	collision_shape.rotation_degrees = 0 + tilt
 	
 
 func on_NitroOut():
