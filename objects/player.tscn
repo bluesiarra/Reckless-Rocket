@@ -47,15 +47,14 @@ scale_amount_random = 0.8
 [node name="nitrolines" type="CPUParticles2D" parent="."]
 position = Vector2( 0, -1400 )
 emitting = false
-amount = 25
-lifetime = 3.0
+amount = 35
 texture = ExtResource( 3 )
 emission_shape = 2
-emission_rect_extents = Vector2( 850, 1 )
+emission_rect_extents = Vector2( 830, 1 )
 direction = Vector2( 0, 1 )
 spread = 0.0
 gravity = Vector2( 0, 0 )
-initial_velocity = 3000.0
+initial_velocity = 3200.0
 initial_velocity_random = 0.9
 scale_amount = 4.0
 scale_amount_random = 0.8
@@ -71,6 +70,7 @@ position = Vector2( 0, 180 )
 emitting = false
 amount = 35
 lifetime = 0.75
+local_coords = false
 emission_shape = 2
 emission_rect_extents = Vector2( 30, 1 )
 direction = Vector2( 0, 1 )
@@ -89,6 +89,7 @@ color_ramp = SubResource( 3 )
 emitting = false
 amount = 30
 lifetime = 0.75
+local_coords = false
 emission_shape = 2
 emission_rect_extents = Vector2( 20, 1 )
 direction = Vector2( 0, 1 )
@@ -108,6 +109,7 @@ emitting = false
 amount = 4
 lifetime = 1.2
 explosiveness = 0.4
+local_coords = false
 emission_shape = 2
 emission_rect_extents = Vector2( 8, 8 )
 direction = Vector2( 0, 1 )
@@ -135,4 +137,7 @@ zoom = Vector2( 1.5, 1.5 )
 wait_time = 0.5
 
 [node name="NitroTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="ForceTimer" type="Timer" parent="."]
 wait_time = 5.0

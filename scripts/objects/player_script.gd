@@ -33,6 +33,8 @@ var star_scale = 1
 
 onready var nitro_timer = $NitroTimer
 onready var xray_timer = $XrayTimer
+onready var force_timer = $ForceTimer
+
 onready var normal_flames = get_node("CollisionShape2D/particles/" + String(PlayerSkinManager.frame) + "_flame")
 onready var nitro_flames = get_node("CollisionShape2D/particles/" + String(PlayerSkinManager.frame) + "_nitro")
 onready var smoke_burst = get_node("CollisionShape2D/particles/" + String(PlayerSkinManager.frame) + "_smoke")
@@ -90,8 +92,8 @@ func _physics_process(delta):
 		cant_move_timer += delta
 		
 		if cant_move_timer < 0.3:
-			camera.offset_h = 0.1 * rng.randf()
-			camera.offset_v = 0.1 * rng.randf()
+			camera.offset_h = 0.15 * rng.randf()
+			camera.offset_v = 0.15 * rng.randf()
 		
 		if cant_move_timer > 1.5:
 			can_move = true
@@ -118,8 +120,8 @@ func _physics_process(delta):
 	elif Input.is_action_pressed("right") and can_move:
 		motion.x += x_accel
 	elif can_move:
-		if abs(motion.x) > 2:
-			motion.x = 0.9 * motion.x 
+		if abs(motion.x) > 0.2:
+			motion.x = 0.98 * motion.x 
 		else:
 			motion.x = 0
 	else:
@@ -136,6 +138,12 @@ func _physics_process(delta):
 		xray_timer.start()
 		powerups[1] = true
 		Input.action_release("powerup_1")
+		
+	if Input.is_action_pressed("powerup_2"):
+		force_timer.start()
+		powerups[2] = true
+		Input.action_release("powerup_2")
+	
 	tilt = motion.x / 12
 	motion.x = clamp(motion.x, -x_topSpeed, x_topSpeed)
 	
