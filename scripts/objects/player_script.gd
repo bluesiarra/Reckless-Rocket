@@ -151,9 +151,12 @@ func _physics_process(delta):
 		Input.action_release("startscreenshake")
 	
 	if screen_shaking:
-		camera.offset_h = 0.05 * rng.randf()
-		camera.offset_v = 0.05 * rng.randf() 
-
+		if can_move:
+			camera.offset_h = 0.05 * rng.randf()
+			camera.offset_v = 0.05 * rng.randf() 
+		else:
+			camera.offset_h = 0.15 * rng.randf()
+			camera.offset_v = 0.15 * rng.randf() 
 		
 	tilt = motion.x / 12
 	motion.x = clamp(motion.x, -x_topSpeed, x_topSpeed)
