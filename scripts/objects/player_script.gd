@@ -39,6 +39,8 @@ onready var normal_flames = get_node("CollisionShape2D/particles/" + String(Play
 onready var nitro_flames = get_node("CollisionShape2D/particles/" + String(PlayerSkinManager.frame) + "_nitro")
 onready var smoke_burst = get_node("CollisionShape2D/particles/" + String(PlayerSkinManager.frame) + "_smoke")
 
+onready var screen_shake_timer = $ScreenShakeTimer
+export var screen_shaking = false
 func _ready():
 	stars.emitting = true
 	rng.randomize()
@@ -51,6 +53,7 @@ func _ready():
 	collision_shape.position = PlayerSkinManager.collide_location
 	collision_shape.shape.extents = PlayerSkinManager.collide_size
 
+	screen_shake_timer.connect("timeout", self, "screenShakeDone")
 func _input(event):
 	if event is InputEventScreenTouch:
 		if (event.pressed == true):
@@ -65,6 +68,7 @@ func _input(event):
 		
 	
 func _physics_process(delta):
+
 	star_scale = y_Speed / 300
 	position.y = start_pos.y
 	
@@ -90,10 +94,6 @@ func _physics_process(delta):
 		nitro_bg.emitting = false
 		
 		cant_move_timer += delta
-		
-		if cant_move_timer < 0.3:
-			camera.offset_h = 0.15 * rng.randf()
-			camera.offset_v = 0.15 * rng.randf()
 		
 		if cant_move_timer > 1.5:
 			can_move = true
@@ -121,7 +121,7 @@ func _physics_process(delta):
 		motion.x += x_accel
 	elif can_move:
 		if abs(motion.x) > 0.2:
-			motion.x = 0.98 * motion.x 
+			motion.x = 0.94 * motion.x 
 		else:
 			motion.x = 0
 	else:
@@ -143,7 +143,18 @@ func _physics_process(delta):
 		force_timer.start()
 		powerups[2] = true
 		Input.action_release("powerup_2")
+
+	if Input.is_action_pressed("startscreenshake"):
+		print('start')
+		screen_shaking = true
+		screen_shake_timer.start()
+		Input.action_release("startscreenshake")
 	
+	if screen_shaking:
+		camera.offset_h = 0.05 * rng.randf()
+		camera.offset_v = 0.05 * rng.randf() 
+
+		
 	tilt = motion.x / 12
 	motion.x = clamp(motion.x, -x_topSpeed, x_topSpeed)
 	
@@ -158,4 +169,7 @@ func on_NitroOut():
 func on_XRayOut():
 	powerups[1] = false
 
+func screenShakeDone():
+	print('finish')
+	screen_shaking = false
 

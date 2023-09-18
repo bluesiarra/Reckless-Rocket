@@ -12,6 +12,7 @@ onready var player = get_node("Player")
 onready var game_timer = get_node("GameTimer")
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
 	var new_asteroid = load("res://objects/Asteroid.tscn")
 	var instanced = new_asteroid.instance()
 	add_child(instanced)

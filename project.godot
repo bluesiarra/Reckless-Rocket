@@ -65,6 +65,10 @@ powerup_2={
 "deadzone": 0.5,
 "events": [  ]
 }
+startscreenshake={
+"deadzone": 0.5,
+"events": [  ]
+}
 
 [input_devices]
 

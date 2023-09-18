@@ -27,7 +27,6 @@ onready var collide = get_node("CollisionShape2D")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
 	rng.randomize()
 	
 	
@@ -68,8 +67,9 @@ func _ready():
 
 func _physics_process(delta):	
 	motion.y = speed
-	position.x = startpos.x
+	#position.x = startpos.x
 	
+
 	self.rotation_degrees += angle_speed * delta
 	if self.rotation_degrees >= 360:
 		self.rotation_degrees = 0
@@ -84,8 +84,9 @@ func _physics_process(delta):
 		var collision = get_slide_collision(index)
 		var body = collision.collider
 		if body.name == "Player":
+			Input.action_press("startscreenshake")
 
-
+			print(Input.is_action_pressed("startscreenshake"))
 			if type == 2 and body.can_move and !player.powerups[2]:
 				if body.position.x <= position.x:
 					body.motion.x += -body.x_accel * 30
@@ -94,6 +95,7 @@ func _physics_process(delta):
 				
 				body.y_Speed -= 60
 				body.can_move = false
+				
 			if type == 1 or type == 0 or player.powerups[2]:
 				body.y_Speed += -5
 				if type == 1:
