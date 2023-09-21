@@ -45,7 +45,13 @@ func _ready():
 	elif size == 2:
 		collide.shape.extents = Vector2(150, 150)
 	
-	sprite.frame_coords.y = size
+	if size == 0:
+		sprite.frame_coords.y = 0
+	elif size == 1:
+		sprite.frame_coords.y = rng.randi_range(1, 2)
+	elif size == 2:
+		sprite.frame_coords.y = 3	
+	
 		
 
 	if rng.randi_range(0, 100) > 60:
@@ -67,8 +73,7 @@ func _ready():
 
 func _physics_process(delta):	
 	motion.y = speed
-	#position.x = startpos.x
-	
+	speed = player.y_Speed
 
 	self.rotation_degrees += angle_speed * delta
 	if self.rotation_degrees >= 360:

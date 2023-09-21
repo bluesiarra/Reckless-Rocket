@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/rockets_spritesheet.png-b34ba49bde693e6340d5357b2345a94b.stex"
+path="res://.import/particle_circle.png-85d0a61fd3ad386aad1cee524ad3f8c2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/objects/full spritesheets/rockets_spritesheet.png"
-dest_files=[ "res://.import/rockets_spritesheet.png-b34ba49bde693e6340d5357b2345a94b.stex" ]
+source_file="res://art/objects/other/particle_circle.png"
+dest_files=[ "res://.import/particle_circle.png-85d0a61fd3ad386aad1cee524ad3f8c2.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

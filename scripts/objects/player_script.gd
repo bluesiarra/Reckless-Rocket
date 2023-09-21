@@ -87,6 +87,8 @@ func _physics_process(delta):
 
 	
 	if !can_move:
+		powerups = [false, false, false]
+		
 		normal_flames.emitting = false
 		nitro_flames.emitting = false
 		
