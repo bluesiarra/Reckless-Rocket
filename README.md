@@ -14,3 +14,6 @@ What is this game?
 2. Soar through the skies and smash asteroids
 3. Avoid the harmful asteroids, they'll slow you down
 4. Collect coins, level up and buy rockets from the shop
+
+Fonts: 
+Vezla 2.0 by Jorge Algarin on 1001Fonts
