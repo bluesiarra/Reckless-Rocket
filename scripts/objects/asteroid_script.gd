@@ -19,7 +19,7 @@ var speed
 
 var size
 
-var startpos
+var hit = false
 
 onready var player = get_node("../Player")
 onready var sprite = get_node("Sprite")
@@ -33,7 +33,7 @@ func _ready():
 	position.x = player.position.x + rng.randi_range(-GameInfo.screen_size.x, GameInfo.screen_size.x)
 	position.y = -0.5 * GameInfo.screen_size.y
 	
-	startpos = position
+
 	speed = player.y_Speed
 	angle_speed = rng.randf_range(15, 30)
 	
@@ -54,15 +54,15 @@ func _ready():
 	
 		
 
-	if rng.randi_range(0, 100) > 60:
+	if rng.randi_range(0, 100) > 50:
 		type = 2
 		sprite.frame_coords.x = 1
 	else:
 		type = rng.randi_range(0, 1)
 		sprite.frame_coords.x = 0
-		if rng.randi_range(0, 100) > 75:
+		if rng.randi_range(0, 100) > 0:
 			type = 1
-			power_up = 0
+			power_up = 2
 		else:
 			type = 0
 	
@@ -79,29 +79,36 @@ func _physics_process(delta):
 	if self.rotation_degrees >= 360:
 		self.rotation_degrees = 0
 
-		
+
 	motion = move_and_slide(motion)
 	
+
 
 	
 	for index in get_slide_count():
 		
 		var collision = get_slide_collision(index)
 		var body = collision.collider
-		if body.name == "Player":
+		if body.name == "Player" and !hit:
+			hit = true
 			Input.action_press("startscreenshake")
 
-			print(Input.is_action_pressed("startscreenshake"))
-			if type == 2 and body.can_move and !player.powerups[2]:
-				if body.position.x <= position.x:
-					body.motion.x += -body.x_accel * 30
+
+			if type == 2 and body.can_move:
+				if !body.powerups[2]:
+					body.can_move = false
+					if body.position.x <= position.x:
+						body.motion.x += -body.x_accel * 30
+					else:
+						body.motion.x = body.x_accel * 30
+					body.y_Speed -= 60
 				else:
-					body.motion.x = body.x_accel * 30
+					queue_free()
+					body.y_Speed -= 5
 				
-				body.y_Speed -= 60
-				body.can_move = false
+
 				
-			if type == 1 or type == 0 or player.powerups[2]:
+			if type == 1 or type == 0:
 				body.y_Speed += -5
 				if type == 1:
 					Input.action_press("powerup_" + String(power_up))

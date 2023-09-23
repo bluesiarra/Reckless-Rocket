@@ -28,6 +28,7 @@ onready var sprite = $CollisionShape2D/Sprite
 onready var camera = $Camera2D
 onready var stars = $stars
 onready var nitro_bg = $nitrolines
+onready var force_bumper = $CollisionShape2D/ForceBumper
 
 var star_scale = 1
 
@@ -46,6 +47,7 @@ func _ready():
 	rng.randomize()
 	nitro_timer.connect("timeout", self, "on_NitroOut")
 	xray_timer.connect("timeout", self, "on_XRayOut")
+	force_timer.connect("timeout", self, "on_ForceOut")
 	
 	start_pos = position
 	
@@ -85,6 +87,10 @@ func _physics_process(delta):
 		Input.action_release("left")
 		Input.action_release("right")
 
+	if powerups[2]:
+		force_bumper.show()
+	else:
+		force_bumper.hide()
 	
 	if !can_move:
 		powerups = [false, false, false]
@@ -147,18 +153,17 @@ func _physics_process(delta):
 		Input.action_release("powerup_2")
 
 	if Input.is_action_pressed("startscreenshake"):
-		print('start')
 		screen_shaking = true
 		screen_shake_timer.start()
 		Input.action_release("startscreenshake")
 	
 	if screen_shaking:
 		if can_move:
-			camera.offset_h = 0.05 * rng.randf()
-			camera.offset_v = 0.05 * rng.randf() 
+			camera.offset_h = 0.04 * rng.randf()
+			camera.offset_v = 0.04 * rng.randf() 
 		else:
-			camera.offset_h = 0.15 * rng.randf()
-			camera.offset_v = 0.15 * rng.randf() 
+			camera.offset_h = 0.07 * rng.randf()
+			camera.offset_v = 0.07 * rng.randf() 
 		
 	tilt = motion.x / 12
 	motion.x = clamp(motion.x, -x_topSpeed, x_topSpeed)
@@ -174,7 +179,9 @@ func on_NitroOut():
 func on_XRayOut():
 	powerups[1] = false
 
+func on_ForceOut():
+	powerups[2] = false
+
 func screenShakeDone():
-	print('finish')
 	screen_shaking = false
 

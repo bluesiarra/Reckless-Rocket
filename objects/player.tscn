@@ -1,12 +1,13 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scripts/objects/player_script.gd" type="Script" id=1]
 [ext_resource path="res://art/objects/full spritesheets/rockets_spritesheet.png" type="Texture" id=2]
 [ext_resource path="res://art/objects/other/nitro_lines.png" type="Texture" id=3]
 [ext_resource path="res://art/objects/other/particle_circle.png" type="Texture" id=4]
+[ext_resource path="res://art/objects/other/force_bumper.png" type="Texture" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 105.5, 189 )
+extents = Vector2( 200, 200 )
 
 [sub_resource type="Curve" id=2]
 _data = [ Vector2( 0.00367647, 0.994126 ), 0.0, 0.0, 0, 0, Vector2( 0.319853, 0.848672 ), 0.0, 0.0, 0, 0, Vector2( 0.648262, 0.381453 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.357763 ), 0.0, 0.0, 0, 0 ]
@@ -43,7 +44,7 @@ spread = 0.0
 gravity = Vector2( 0, 0 )
 initial_velocity = 120.0
 initial_velocity_random = 0.8
-scale_amount = 3.0
+scale_amount = 0.5
 scale_amount_random = 0.8
 
 [node name="nitrolines" type="CPUParticles2D" parent="."]
@@ -62,13 +63,18 @@ scale_amount = 4.0
 scale_amount_random = 0.8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -5 )
 shape = SubResource( 1 )
+
+[node name="ForceBumper" type="Sprite" parent="CollisionShape2D"]
+visible = false
+position = Vector2( 0, -238 )
+texture = ExtResource( 5 )
 
 [node name="particles" type="Node2D" parent="CollisionShape2D"]
 position = Vector2( 0, 180 )
 
 [node name="0_flame" type="CPUParticles2D" parent="CollisionShape2D/particles"]
+position = Vector2( 0, 1 )
 emitting = false
 amount = 40
 lifetime = 2.0
@@ -83,7 +89,7 @@ initial_velocity = 250.0
 initial_velocity_random = 0.75
 angular_velocity = 30.0
 angular_velocity_random = 0.75
-scale_amount = 10.0
+scale_amount = 2.5
 scale_amount_random = 0.75
 scale_amount_curve = SubResource( 2 )
 color_ramp = SubResource( 3 )
@@ -103,7 +109,7 @@ initial_velocity = 350.0
 initial_velocity_random = 0.75
 angular_velocity = 30.0
 angular_velocity_random = 0.75
-scale_amount = 16.0
+scale_amount = 4.0
 scale_amount_random = 0.75
 scale_amount_curve = SubResource( 4 )
 color_ramp = SubResource( 5 )
