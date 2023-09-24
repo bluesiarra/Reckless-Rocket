@@ -33,9 +33,14 @@ PlayerSkinManager="*res://scripts/automatic/player_skin_manager.gd"
 
 window/size/width=810
 window/size/height=1665
+window/vsync/use_vsync=false
 window/handheld/orientation="portrait"
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
+
+[global]
+
+force=false
 
 [gui]
 

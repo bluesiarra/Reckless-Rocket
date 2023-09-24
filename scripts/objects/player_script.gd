@@ -43,7 +43,7 @@ onready var smoke_burst = get_node("CollisionShape2D/particles/" + String(Player
 onready var screen_shake_timer = $ScreenShakeTimer
 export var screen_shaking = false
 func _ready():
-	stars.emitting = true
+	#stars.emitting = true
 	rng.randomize()
 	nitro_timer.connect("timeout", self, "on_NitroOut")
 	xray_timer.connect("timeout", self, "on_XRayOut")
@@ -74,7 +74,7 @@ func _physics_process(delta):
 	star_scale = y_Speed / 300
 	position.y = start_pos.y
 	
-	get_node("/root/Game/HUD/DebugLabel").text = String(y_Speed)
+	get_node("/root/Game/HUD/DebugLabel").text = String(Engine.get_frames_per_second())
 	
 	
 	if (is_touch_held == true and touch_position != null):
@@ -110,16 +110,16 @@ func _physics_process(delta):
 		smoke_burst.emitting = false		
 		if !powerups[0]:
 			stars.speed_scale = star_scale
-			y_Speed += delta * 8
-			normal_flames.emitting = true
+			#y_Speed += delta * 8
+			#normal_flames.emitting = true
 			nitro_flames.emitting = false
 			nitro_bg.emitting = false
 		else:
 			stars.speed_scale = star_scale * 4
-			nitro_flames.emitting = true
+			#nitro_flames.emitting = true
 			normal_flames.emitting = false
-			nitro_bg.emitting = true
-			y_Speed += delta * 32
+			#nitro_bg.emitting = true
+			#y_Speed += delta * 32
 	
 	
 	

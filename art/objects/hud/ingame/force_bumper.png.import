@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/nitro_lines.png-9177b057d3b2f599647b4de169c47c0a.stex"
+path="res://.import/force_bumper.png-7033bcdc1d4926ed1a51d6f167549593.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/objects/other/nitro_lines.png"
-dest_files=[ "res://.import/nitro_lines.png-9177b057d3b2f599647b4de169c47c0a.stex" ]
+source_file="res://art/objects/hud/ingame/force_bumper.png"
+dest_files=[ "res://.import/force_bumper.png-7033bcdc1d4926ed1a51d6f167549593.stex" ]
 
 [params]
 

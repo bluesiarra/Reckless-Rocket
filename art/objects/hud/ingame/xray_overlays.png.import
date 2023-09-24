@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/force_bumper.png-0abffbb7f909519a1428fd0e23985112.stex"
+path="res://.import/xray_overlays.png-593135074f8eff15a298495fc06d2abc.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/objects/other/force_bumper.png"
-dest_files=[ "res://.import/force_bumper.png-0abffbb7f909519a1428fd0e23985112.stex" ]
+source_file="res://art/objects/hud/ingame/xray_overlays.png"
+dest_files=[ "res://.import/xray_overlays.png-593135074f8eff15a298495fc06d2abc.stex" ]
 
 [params]
 

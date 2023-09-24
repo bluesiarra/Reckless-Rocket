@@ -25,10 +25,13 @@ onready var player = get_node("../Player")
 onready var sprite = get_node("Sprite")
 onready var collide = get_node("CollisionShape2D")
 
+onready var xray = $XRayOverlay
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rng.randomize()
 	
+
 	
 	position.x = player.position.x + rng.randi_range(-GameInfo.screen_size.x, GameInfo.screen_size.x)
 	position.y = -0.5 * GameInfo.screen_size.y
@@ -47,25 +50,28 @@ func _ready():
 	
 	if size == 0:
 		sprite.frame_coords.y = 0
+		xray.scale = Vector2(2.5, 2.5)
 	elif size == 1:
 		sprite.frame_coords.y = rng.randi_range(1, 2)
+		xray.scale = Vector2(2, 2)
 	elif size == 2:
 		sprite.frame_coords.y = 3	
-	
+		xray.scale = Vector2(1.5, 1.5)	
 		
 
-	if rng.randi_range(0, 100) > 50:
+	if rng.randi_range(0, 100) > 99:
 		type = 2
 		sprite.frame_coords.x = 1
+
 	else:
-		type = rng.randi_range(0, 1)
 		sprite.frame_coords.x = 0
 		if rng.randi_range(0, 100) > 0:
 			type = 1
-			power_up = 2
+			power_up = rng.randi_range(0, 2)
 		else:
 			type = 0
 	
+	xray.frame_coords.y = type
 	sprite.show()
 
 	
@@ -74,6 +80,12 @@ func _ready():
 func _physics_process(delta):	
 	motion.y = speed
 	speed = player.y_Speed
+
+	if player.powerups[1]:
+		xray.show()
+		
+	else:
+		xray.hide()
 
 	self.rotation_degrees += angle_speed * delta
 	if self.rotation_degrees >= 360:
@@ -101,10 +113,10 @@ func _physics_process(delta):
 						body.motion.x += -body.x_accel * 30
 					else:
 						body.motion.x = body.x_accel * 30
-					body.y_Speed -= 60
+					#body.y_Speed -= 60
 				else:
 					queue_free()
-					body.y_Speed -= 5
+					#body.y_Speed -= 5
 				
 
 				
@@ -114,8 +126,9 @@ func _physics_process(delta):
 					Input.action_press("powerup_" + String(power_up))
 				queue_free()
 	
-	if position.y > GameInfo.screen_size.y * 1.5:
+	if position.y > GameInfo.screen_size.y * 1.2:
 		queue_free()
+		print("ded")
 	
 			
 	
