@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://fonts/size30_Vezla.tres" type="DynamicFont" id=1]
+
+[node name="game_over" type="Node2D"]
+
+[node name="debug" type="Label" parent="."]
+anchor_left = 0.214
+anchor_top = -0.06
+anchor_right = 0.214
+anchor_bottom = -0.06
+margin_left = 10.0
+margin_top = 11.0
+margin_right = 240.0
+margin_bottom = 201.0
+custom_fonts/font = ExtResource( 1 )
+text = "we live
+we love
+we lie"

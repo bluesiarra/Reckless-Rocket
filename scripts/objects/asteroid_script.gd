@@ -59,13 +59,13 @@ func _ready():
 		xray.scale = Vector2(1.5, 1.5)	
 		
 
-	if rng.randi_range(0, 100) > 99:
+	if rng.randi_range(0, 100) > 50:
 		type = 2
 		sprite.frame_coords.x = 1
 
 	else:
 		sprite.frame_coords.x = 0
-		if rng.randi_range(0, 100) > 0:
+		if rng.randi_range(0, 100) > 80:
 			type = 1
 			power_up = rng.randi_range(0, 2)
 		else:
@@ -113,10 +113,10 @@ func _physics_process(delta):
 						body.motion.x += -body.x_accel * 30
 					else:
 						body.motion.x = body.x_accel * 30
-					#body.y_Speed -= 60
+					body.y_Speed -= 60
 				else:
 					queue_free()
-					#body.y_Speed -= 5
+					body.y_Speed -= 5
 				
 
 				
@@ -128,7 +128,6 @@ func _physics_process(delta):
 	
 	if position.y > GameInfo.screen_size.y * 1.2:
 		queue_free()
-		print("ded")
 	
 			
 	
