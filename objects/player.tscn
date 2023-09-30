@@ -32,6 +32,7 @@ script = ExtResource( 1 )
 
 [node name="stars" type="CPUParticles2D" parent="."]
 position = Vector2( 0, -1400 )
+z_index = -99
 emitting = false
 amount = 45
 lifetime = 90.0

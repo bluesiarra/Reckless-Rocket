@@ -9,7 +9,7 @@ var counter = 0
 
 signal game_done
 
-var new_asteroid = preload("res://objects/Asteroid.tscn")
+#var new_asteroid = preload("res://objects/Asteroid.tscn")
 
 onready var player = get_node("Player")
 onready var game_timer = get_node("GameTimer")
@@ -18,7 +18,7 @@ onready var hud_time_label = get_node("/root/Game/HUD/TimeLabel")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-	self.call_deferred("add_child", new_asteroid.instance())
+	#self.call_deferred("add_child", new_asteroid.instance())
 	
 	if GameInfo.game_mode == "timed":
 		game_timer.connect("timeout", self, "gametimer_done")
@@ -39,10 +39,10 @@ func _physics_process(delta):
 		else:
 			hud_time_label.text = String(int(round(game_timer.time_left))) + "s"
 		
-	counter += delta
-	if counter * player.y_Speed > 900:
-		counter = 0
-		new_asteroid.call_deferred("instance")
+	#counter += delta
+	#if counter * player.y_Speed > 900:
+	#	counter = 0
+	#	new_asteroid.call_deferred("instance")
 
 
 func gametimer_done():

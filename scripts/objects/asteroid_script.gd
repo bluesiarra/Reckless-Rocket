@@ -27,14 +27,11 @@ onready var collide = get_node("CollisionShape2D")
 
 onready var xray = $XRayOverlay
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	rng.randomize()
-	
 
-	
-	position.x = player.position.x + rng.randi_range(-GameInfo.screen_size.x, GameInfo.screen_size.x)
-	position.y = -0.5 * GameInfo.screen_size.y
+func reload_asteroid():
+	rng.randomize()
+
+	position.x = player.position.x + rng.randi_range(-0.6 * GameInfo.screen_size.x, 0.6 * GameInfo.screen_size.x)
 	
 
 	speed = player.y_Speed
@@ -73,6 +70,9 @@ func _ready():
 	
 	xray.frame_coords.y = type
 	sprite.show()
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	reload_asteroid()
 
 	
 
@@ -115,7 +115,8 @@ func _physics_process(delta):
 						body.motion.x = body.x_accel * 30
 					body.y_Speed -= 60
 				else:
-					queue_free()
+					position.y = -0.3 * GameInfo.screen_size.y
+					reload_asteroid()
 					body.y_Speed -= 5
 				
 
@@ -124,10 +125,12 @@ func _physics_process(delta):
 				body.y_Speed += -5
 				if type == 1:
 					Input.action_press("powerup_" + String(power_up))
-				queue_free()
+				position.y = -0.3 * GameInfo.screen_size.y
+				reload_asteroid()
 	
 	if position.y > GameInfo.screen_size.y * 1.2:
-		queue_free()
+		position.y = -0.5 * GameInfo.screen_size.y
+		reload_asteroid()
 	
 			
 	
