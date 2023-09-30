@@ -10,7 +10,7 @@ var counter = 0
 signal game_done
 
 var new_asteroid = preload("res://objects/Asteroid.tscn")
-#var instanced = new_asteroid.instance()
+
 onready var player = get_node("Player")
 onready var game_timer = get_node("GameTimer")
 
@@ -26,7 +26,7 @@ func _ready():
 		hud_time_label.show()
 
 	hud_time_label.hide()
-	
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	#Send player speed to HUD
@@ -42,7 +42,8 @@ func _physics_process(delta):
 	counter += delta
 	if counter * player.y_Speed > 900:
 		counter = 0
-		self.call_deferred("add_child", new_asteroid.instance())
+		new_asteroid.call_deferred("instance")
+
 
 func gametimer_done():
 	PreviousGameInfo["y_Speed"] = player.y_Speed
