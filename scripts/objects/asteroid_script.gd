@@ -25,13 +25,18 @@ onready var player = get_node("../Player")
 onready var sprite = get_node("Sprite")
 onready var collide = get_node("CollisionShape2D")
 
+onready var contact_particles = get_node("Contact")
+onready var powerup_particles = get_node("PowerupParticle")
+
 onready var xray = $XRayOverlay
 
 
 func reload_asteroid():
+	motion.x = 0
+	hit = false
 	rng.randomize()
 
-	position.x = player.position.x + rng.randi_range(-0.6 * GameInfo.screen_size.x, 0.6 * GameInfo.screen_size.x)
+	position.x = player.position.x + rng.randi_range(-GameInfo.screen_size.x,GameInfo.screen_size.x)
 	
 
 	speed = player.y_Speed
@@ -56,13 +61,13 @@ func reload_asteroid():
 		xray.scale = Vector2(1.5, 1.5)	
 		
 
-	if rng.randi_range(0, 100) > 50:
+	if rng.randi_range(0, 100) > 60:
 		type = 2
 		sprite.frame_coords.x = 1
 
 	else:
 		sprite.frame_coords.x = 0
-		if rng.randi_range(0, 100) > 80:
+		if rng.randi_range(0, 100) > 75:
 			type = 1
 			power_up = rng.randi_range(0, 2)
 		else:
@@ -81,7 +86,7 @@ func _physics_process(delta):
 	motion.y = speed
 	speed = player.y_Speed
 
-	if player.powerups[1]:
+	if player.powerups[1] and !hit:
 		xray.show()
 		
 	else:
@@ -118,20 +123,26 @@ func _physics_process(delta):
 					position.y = -0.3 * GameInfo.screen_size.y
 					reload_asteroid()
 					body.y_Speed -= 5
-				
+					contact_particles.emitting = true
+					
 
 				
 			if type == 1 or type == 0:
+				body.asteroids_hit += 1
+				contact_particles.emitting = true
+				print("E")
 				body.y_Speed += -5
 				if type == 1:
+					powerup_particles.emitting = true
 					Input.action_press("powerup_" + String(power_up))
-				position.y = -0.3 * GameInfo.screen_size.y
-				reload_asteroid()
+				sprite.hide()
 	
 	if position.y > GameInfo.screen_size.y * 1.2:
 		position.y = -0.5 * GameInfo.screen_size.y
 		reload_asteroid()
 	
-			
+	if contact_particles.emitting == false and hit:
+		position.y = -0.3 * GameInfo.screen_size.y
+		reload_asteroid()
 	
 						

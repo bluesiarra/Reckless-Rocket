@@ -11,6 +11,7 @@ var tilt = 0
 export var y_Speed = 300
 export var can_move = true
 export var powerups = [false, false, false]
+export var asteroids_hit = 0
 
 var rng = RandomNumberGenerator.new()
 

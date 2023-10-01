@@ -8,13 +8,16 @@
 script = ExtResource( 3 )
 
 [node name="Asteroid" parent="." instance=ExtResource( 2 )]
-position = Vector2( 403, -335 )
+position = Vector2( 410, -413 )
 
 [node name="Asteroid2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 403, -2001 )
+position = Vector2( 403, -2342 )
 
 [node name="Asteroid3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 405, -1095 )
+position = Vector2( 419, -1329 )
+
+[node name="Asteroid4" parent="." instance=ExtResource( 2 )]
+position = Vector2( 419, -3407 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 405, 925 )

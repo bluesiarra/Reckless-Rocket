@@ -7,7 +7,7 @@ extends Node
 
 onready var screen_size = get_viewport().get_visible_rect().size
 
-var game_mode = "time"
+var game_mode = "timed"
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
