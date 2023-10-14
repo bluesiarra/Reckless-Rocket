@@ -42,7 +42,7 @@ func reload_asteroid():
 	speed = player.y_Speed
 	angle_speed = rng.randf_range(15, 30)
 	
-	size = rng.randi_range(0, 2)
+	size = rng.randi_range(0, 1)
 	if size == 0:
 		collide.shape.extents = Vector2(250, 250)
 	elif size == 1:
@@ -113,6 +113,8 @@ func _physics_process(delta):
 
 			if type == 2 and body.can_move:
 				if !body.powerups[2]:
+					body.lives += -1
+					print(body.lives)
 					body.can_move = false
 					if body.position.x <= position.x:
 						body.motion.x += -body.x_accel * 30
@@ -130,7 +132,6 @@ func _physics_process(delta):
 			if type == 1 or type == 0:
 				body.asteroids_hit += 1
 				contact_particles.emitting = true
-				print("E")
 				body.y_Speed += -5
 				if type == 1:
 					powerup_particles.emitting = true

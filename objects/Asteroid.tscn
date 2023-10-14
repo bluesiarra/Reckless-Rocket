@@ -60,9 +60,8 @@ scale_amount_curve = SubResource( 3 )
 color_ramp = SubResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
-visible = false
 texture = SubResource( 1 )
-hframes = 5
+hframes = 2
 vframes = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
