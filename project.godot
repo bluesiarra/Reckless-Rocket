@@ -18,7 +18,7 @@ In Reckless Rocket, the thrill is in the challenge. Harness your piloting skills
 Along the way, you can collect blazing hot power-ups! These glowing orbs allow you to shatter and soar through the Milky Way.  As you soar through the star-studded expanse, keep a keen eye on the clock. You can play Classic, where you must shatter the most asteroids; or Speed, where you must zoom through the skies.
 
 Prepare to be captivated by the serene beauty of space, the excitement of a high-stakes chase, and the triumph of mastering the reckless art of rocketry. Are you ready to leave your mark among the stars and claim your place as a Reckless Rocket legend?"
-run/main_scene="res://scenes/Game.tscn"
+run/main_scene="res://scenes/menu.tscn"
 boot_splash/image="res://art/brand/splashscreen.png"
 boot_splash/fullsize=false
 boot_splash/use_filter=false
