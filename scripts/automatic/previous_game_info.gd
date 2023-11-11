@@ -5,8 +5,10 @@ extends Node
 # var a = 2
 # var b = "text"
 
+
 var y_Speed = 9000
 var asteroids_hit = 0
+var gamemode = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
