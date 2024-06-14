@@ -99,9 +99,6 @@ func _physics_process(delta):
 
 	motion = move_and_slide(motion)
 	
-
-
-	
 	for index in get_slide_count():
 		
 		var collision = get_slide_collision(index)

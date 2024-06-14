@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/world.tscn" type="PackedScene" id=1]
 [ext_resource path="res://fonts/size30_Vezla.tres" type="DynamicFont" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://art/objects/hud/ingame/asteroid_counter_icon.png" type="Texture" id=4]
 [ext_resource path="res://art/objects/hud/ingame/battery_fill.png" type="Texture" id=5]
 [ext_resource path="res://art/objects/hud/ingame/empty_battery.png" type="Texture" id=6]
+[ext_resource path="res://art/objects/hud/ingame/speed_counter_icon.png" type="Texture" id=7]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -49,12 +50,17 @@ anchor_left = 0.214
 anchor_top = -0.06
 anchor_right = 0.214
 anchor_bottom = -0.06
-margin_left = -153.34
+margin_left = -120.34
 margin_top = 124.9
-margin_right = 76.66
+margin_right = 109.66
 margin_bottom = 314.9
 custom_fonts/font = ExtResource( 2 )
 text = "300 m/s"
+
+[node name="SpeedCounterIcon" type="Sprite" parent="HUD/SpeedLabel"]
+position = Vector2( -24, 15 )
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 7 )
 
 [node name="AsteroidLabel" type="Label" parent="HUD"]
 anchor_left = 0.214

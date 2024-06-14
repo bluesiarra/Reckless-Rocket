@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://fonts/size64_Vezla.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scripts/scenes/game_over_logic.gd" type="Script" id=2]
+[ext_resource path="res://fonts/size30_Vezla.tres" type="DynamicFont" id=3]
+[ext_resource path="res://art/objects/hud/ingame/asteroid_counter_icon.png" type="Texture" id=4]
+[ext_resource path="res://art/objects/hud/ingame/speed_counter_icon.png" type="Texture" id=5]
 
 [node name="game_over" type="Node2D"]
 script = ExtResource( 2 )
@@ -13,3 +16,38 @@ margin_bottom = 121.0
 custom_fonts/font = ExtResource( 1 )
 text = "GAME OVER"
 align = 1
+
+[node name="AsteroidsHitLabel" type="Label" parent="."]
+anchor_left = 0.214
+anchor_top = -0.06
+anchor_right = 0.214
+anchor_bottom = -0.06
+margin_top = 370.0
+margin_right = 405.0
+margin_bottom = 410.0
+custom_fonts/font = ExtResource( 3 )
+text = "12 hit"
+align = 1
+
+[node name="AsteroidCounterIcon" type="Sprite" parent="AsteroidsHitLabel"]
+position = Vector2( 202.5, -100 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 4 )
+
+[node name="SpeedLabel" type="Label" parent="."]
+anchor_left = 0.214
+anchor_top = -0.06
+anchor_right = 0.214
+anchor_bottom = -0.06
+margin_left = 405.0
+margin_top = 370.0
+margin_right = 810.0
+margin_bottom = 410.0
+custom_fonts/font = ExtResource( 3 )
+text = "300 m/s"
+align = 1
+
+[node name="SpeedCounterIcon" type="Sprite" parent="SpeedLabel"]
+position = Vector2( 202.5, -100 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 5 )
